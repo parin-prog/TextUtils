@@ -1,39 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Proptypes from 'prop-types'
 import { Outlet, Link } from 'react-router-dom'
 import './navbar.css'
 
 export default function Navbar(a) {
 
-  const [mode, setMode] = useState('dark');
-  const [swtch, setSwtch] = useState(false);
-  
-  function darkMode() {
-
-    if (a.darkmode === 'light') {
-      document.body.style.backgroundColor = '#254e7a';
-      document.body.style.color = 'white';
-      setSwtch(true);
-      setInterval(() => {
-        document.title = 'Dark mode is on';
-      }, 1000);
-      setInterval(() => {
-        document.title = 'Turn Light mode';
-      }, 2000);
-    } else {
-      document.body.style.backgroundColor = 'white';
-      document.body.style.color = 'black';
-      setSwtch(false);
-      setInterval(() => {
-        document.title = 'Light mode is on';
-      }, 2000);
-    }
-
-    setMode(mode === 'light' ? 'dark' : 'light');
-    a.setdarkmode(a.darkmode === 'light' ? 'dark' : 'light');
-    a.showalert(`Enjoy ${mode.charAt(0).toUpperCase() + mode.slice(1)} mode on this page has enabled now!!!`, "Success");
-  }
-  
   return (
       <nav className={`navbar navbar-expand-lg navbar-${a.darkmode} bg-${a.darkmode}`}>
         <Link className="navbar-brand" to="/">{a.title}</Link>
@@ -53,15 +24,18 @@ export default function Navbar(a) {
         </div>
 
         <div className='d-flex'>
-          <div className='bg-primary rounded mx-2' onClick={darkMode} style={{height:'30px', width:'30px'}}></div>
+          <div className='bg-primary rounded mx-2' onClick={()=>{a.setdarkmode('primary')}} style={{height:'20px', width:'30px'}}></div>
+          <div className='bg-danger rounded mx-2' onClick={()=>{a.setdarkmode('danger')}} style={{height:'20px', width:'30px'}}></div>
+          <div className='bg-success rounded mx-2' onClick={()=>{a.setdarkmode('success')}} style={{height:'20px', width:'30px'}}></div>
+          <div className='bg-warning rounded mx-2' onClick={()=>{a.setdarkmode('warning')}} style={{height:'20px', width:'30px'}}></div>
         </div>
 
         <div className='mode'>
           <label className='switch' >
-            <input type='checkbox' checked={swtch} onChange={darkMode} />
+            <input type='checkbox' checked={a.swtch} onClick={()=>{a.setdarkmode(null)}} onChange={(e)=>{console.log(e.target.value)}} />
             <span className='slider round'></span>
           </label>&nbsp;
-          Enable {mode.charAt(0).toUpperCase() + mode.slice(1)} Mode
+          Enable {a.mode.charAt(0).toUpperCase() + a.mode.slice(1)} Mode
         </div>
         <Outlet />
       </nav>

@@ -59,7 +59,7 @@ export default function TextForm(a) {
         <button className='mx-1' onClick={lowerCaseHandler}>LowerCase</button>
         
         <div className='container my-4'>
-        {text.length>1 ? text.split(' ').length : 0} words, {text.length} characters.
+        {text.length>1 ? text.split(/\s+/).length : 0} words, {text.length} characters.
         </div>
     <h2>Preview: </h2>
     <p id="demo">{text}</p>
