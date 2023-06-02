@@ -6,7 +6,7 @@ export default function TextForm(props) {
 
     const changeHandler = (event) => {
         setText(event.target.value);
-        props.showalert("Enjoy writting mode on this page keep writting!!!", "Success");
+        text.length === 1 && props.showalert("Enjoy writting mode on this page keep writting!!!", "Success");
     }
 
     const upperCaseHandler = () => {
@@ -17,6 +17,14 @@ export default function TextForm(props) {
         setText(text.toLowerCase());
         props.showalert("Converted to lowercase!!!", "Success");
     }
+    const sentenceCase = () => {
+        const words = text.toLowerCase().split(' ');
+        const sentenceCased = words.map(
+          (word) => word.charAt(0).toUpperCase() + word.slice(1)
+        );
+        setText(sentenceCased.join(' '));
+        
+      }
     const boldText = () => {
         document.getElementById('demo').innerHTML = `<strong>${text}</strong>`;
     }
@@ -42,7 +50,18 @@ export default function TextForm(props) {
     }
 
     const removeExtraSpaces = () => {
-        setText(text.split(/\s+/));
+        let result = '';
+
+        for (let i = 0; i < text.length - 1; i++) {
+            if (text[i] == ' ' && text[i + 1] == ' ') { continue; }
+            else { result += text[i]; }
+        }
+        if (text[text.length - 1] != ' ') { result += text[text.length - 1]; }
+        setText(text ? result : '');
+    }
+
+    const removeSpecialCharacters = () => {
+        setText(text.replace(/[^a-zA-Z0-9 ]/g, ''));
     }
 
     const [text, setText] = useState("");
@@ -54,53 +73,58 @@ export default function TextForm(props) {
             <div className="mb-3">
                 <textarea style={props.myStyle} className="form-control" value={text} onChange={changeHandler} id="my" rows="6"></textarea>
             </div>
-            <button className='btn btn-primary mx-1 my-1' onClick={upperCaseHandler}>UpperCase</button>
-            <button className='btn btn-primary mx-1 my-1' onClick={lowerCaseHandler}>LowerCase</button>
-            <button className='btn btn-primary mx-1 my-1' onClick={removeExtraSpaces}>Remove Spaces</button>
+            <button title='Convert to UpperCase' className='btn btn-primary mx-1 my-1' onClick={upperCaseHandler}>UpperCase</button>
+            <button title='Convert to LoweCase' className='btn btn-primary mx-1 my-1' onClick={lowerCaseHandler}>LowerCase</button>
+            <button title='Convert to CamelCase' className='btn btn-primary mx-1 my-1' onClick={sentenceCase}>SentenceCase</button>
+            <button title='Remove Extra Spaces' className='btn btn-primary mx-1 my-1' onClick={removeExtraSpaces}>Remove Extra Spaces</button>
+            <button title='Remove all special charactors from text.' className='btn btn-primary mx-1 my-1' onClick={removeSpecialCharacters}>Remove Special Characters</button>
             <div className='my-4'>
                 <h2 className='my-3'>Your Text Summary:</h2>
                 <div className='summary-info mx-1'>
-                <p>
-                    <b>
-                        {
-                            text
-                                .replace(/\s/)
-                                .split(' ')
-                                .filter((value) => value !== '').length
-                        }
-                    </b>{' '}
-                    words,
-                    <b> {text.trim().length}</b> characters,
-                    <b>
-                        {' '}
-                        {
-                            text
-                                .replace(/\n/g, '.')
-                                .split('.')
-                                .filter((value) => value !== '').length
-                        }
-                    </b>{' '}
-                    statements,
-                    <b> {text.split('?').length - 1}</b> questions,{' '}
-                    <b>{text.split('!').length - 1}</b> exclamations.
-                </p>
-                <p>
-                    {0.08 *
-                        text.split(' ').filter((element) => {
-                            return element.length !== 0;
-                        }).length}{' '}
-                    Minutes read
-                </p>
+                    <p>
+                        <b>
+                            {
+                                text
+                                    .replace(/\s/)
+                                    .split(' ')
+                                    .filter((value) => value !== '').length
+                            }
+                        </b>{' '}
+                        words,
+                        <b> {text.trim().length}</b> characters,
+                        <b>
+                            {' '}
+                            {
+                                text
+                                    .replace(/\n/g, '.')
+                                    .split('.')
+                                    .filter((value) => value !== '').length
+                            }
+                        </b>{' '}
+                        statements,
+                        <b> {text.split('?').length - 1}</b> questions,{' '}
+                        <b>{text.split('!').length - 1}</b> exclamations.
+                    </p>
+                    <p>
+                        {0.08 *
+                            text.split(' ').filter((element) => {
+                                return element.length !== 0;
+                            }).length}{' '}
+                        Minutes read
+                    </p>
                 </div>
             </div>
-            <div className='format-buttons'>
-            <button className='btn btn-primary my-1 mx-2' onClick={boldText}><strong>B</strong></button>
-            <button className='btn btn-primary my-1 mx-2' onClick={italicText}><i>I</i></button>
-            <button className='btn btn-primary my-1 mx-2' onClick={underlineText}><u>U</u></button>
-            <button className='btn btn-primary my-1 mx-2' onClick={copyText}><strong>Copy</strong></button>
-            <button className='btn btn-primary my-1 mx-2' onClick={cutText}><strong>Cut</strong></button>
+
+            <div className='preview'>
+                <h2 className='my-3'>Preview: </h2>
+                <div className='format-buttons'>
+                    <button className='btn btn-primary my-1 mx-2' onClick={boldText}><strong>B</strong></button>
+                    <button className='btn btn-primary my-1 mx-2' onClick={italicText}><i>I</i></button>
+                    <button className='btn btn-primary my-1 mx-2' onClick={underlineText}><u>U</u></button>
+                    <button className='btn btn-primary my-1 mx-2' onClick={copyText}><strong>Copy</strong></button>
+                    <button className='btn btn-primary my-1 mx-2' onClick={cutText}><strong>Cut</strong></button>
+                </div>
             </div>
-            <h2 className='my-3'>Preview: </h2>
             <p id="demo">{!text ? "<<Nothing to preview!!!!>>" : text}</p>
         </div>
     )

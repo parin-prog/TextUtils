@@ -5,6 +5,12 @@
 #demo {
     min-height: 100px;
 }
+.preview{
+    width: 30vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 .format-buttons{
     
 }

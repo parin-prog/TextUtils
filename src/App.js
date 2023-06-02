@@ -28,7 +28,7 @@ function App() {
 
     setTimeout(() => {
       setAlert(null)
-    }, 1100);
+    }, 3000);
   }
 
   const removeBodyClasses = () => {

@@ -1,8 +1,13 @@
+.alert-box{
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0.2vw;
+}
 .alert{
     padding: 20px;
     color: white;
     background-color: rgb(25, 118, 154);
-    margin-bottom: 15px;    
+    margin-bottom: 15px;
 }
 
 .closebtn{

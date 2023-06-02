@@ -5,7 +5,7 @@ export default function Alert(a) {
 
 
   return (
-      <div style={{height: '50px'}}>
+      <div className='alert-box' style={{height: '50px'}}>
       {a.alert &&
       <div className='alert'>
         <strong>{a.alert.type}!!! : </strong>{a.alert.msg}<span className='closebtn'></span>
