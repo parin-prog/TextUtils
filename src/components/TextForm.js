@@ -20,11 +20,11 @@ export default function TextForm(props) {
     const sentenceCase = () => {
         const words = text.toLowerCase().split(' ');
         const sentenceCased = words.map(
-          (word) => word.charAt(0).toUpperCase() + word.slice(1)
+            (word) => word.charAt(0).toUpperCase() + word.slice(1)
         );
         setText(sentenceCased.join(' '));
-        
-      }
+
+    }
     const boldText = () => {
         document.getElementById('demo').innerHTML = `<strong>${text}</strong>`;
     }
@@ -53,10 +53,10 @@ export default function TextForm(props) {
         let result = '';
 
         for (let i = 0; i < text.length - 1; i++) {
-            if (text[i] == ' ' && text[i + 1] == ' ') { continue; }
+            if (text[i] === ' ' && text[i + 1] === ' ') { continue; }
             else { result += text[i]; }
         }
-        if (text[text.length - 1] != ' ') { result += text[text.length - 1]; }
+        if (text[text.length - 1] !== ' ') { result += text[text.length - 1]; }
         setText(text ? result : '');
     }
 
@@ -64,6 +64,41 @@ export default function TextForm(props) {
         setText(text.replace(/[^a-zA-Z0-9 ]/g, ''));
     }
 
+    const clearText = () => {
+        setText('');
+    }
+
+    const BASE64 = 'base64';
+    const base64 = () => {
+        setText(Buffer.from(text).toString(BASE64));
+    }
+
+    const extractText = () => {
+        const letters = text.match(/[a-z]|[A-Z]/g);
+        if (letters === null) {
+            setText('');
+        } else {
+            setText(letters.join(''));
+        }
+    }
+    const extractNumbers = () => {
+        const digits = text.match(/[0-9]/g);
+        if (digits === null) {
+            setText('');
+        } else {
+            setText(digits.join(''));
+        }
+    }
+    const extractLinks = () => {
+        const link = text.match(// eslint-disable-next-line
+            /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/gim
+        );
+        if (link === null) {
+            setText('');
+        } else {
+            setText(link.join(''));
+        }
+    }
     const [text, setText] = useState("");
 
 
@@ -78,6 +113,12 @@ export default function TextForm(props) {
             <button title='Convert to CamelCase' className='btn btn-primary mx-1 my-1' onClick={sentenceCase}>SentenceCase</button>
             <button title='Remove Extra Spaces' className='btn btn-primary mx-1 my-1' onClick={removeExtraSpaces}>Remove Extra Spaces</button>
             <button title='Remove all special charactors from text.' className='btn btn-primary mx-1 my-1' onClick={removeSpecialCharacters}>Remove Special Characters</button>
+            <button title='Clear all text' className='btn btn-primary mx-1 my-1' onClick={clearText}>Clear</button>
+            <button title='Encode text to base64' className='btn btn-primary mx-1 my-1' onClick={base64}>Encode to base64</button>
+            <button title='Extract numbers from text' className='btn btn-primary mx-1 my-1' onClick={extractNumbers}>Extract Numbers</button>
+            <button title='Extract links from text' className='btn btn-primary mx-1 my-1' onClick={extractLinks}>Extract Links</button>
+            <button title='Extract only text from whole text' className='btn btn-primary mx-1 my-1' onClick={extractText}>Extract Text</button>
+
             <div className='my-4'>
                 <h2 className='my-3'>Your Text Summary:</h2>
                 <div className='summary-info mx-1'>
