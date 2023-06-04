@@ -1,9 +1,6 @@
 .navbar-brand{
   margin-left: 20px;
 }
-.mode{
-    float: right;
-}
 .switch{
     position: relative;
     display: inline-block;
@@ -55,3 +52,16 @@ input:checked + .slider {
   .slider.round:before {
     border-radius: 50%;
   }
+
+  
+@media only screen and (max-width: 700px) {
+  .theme-palletes{
+    padding: 10px;
+  }
+  .dmode{
+    padding: 10px 0;
+  }
+   .dmode-label{
+    display: none;
+  }
+}

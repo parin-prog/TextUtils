@@ -158,7 +158,7 @@ export default function TextForm(props) {
 
             <div className='preview'>
                 <h2 className='my-3'>Preview: </h2>
-                <div className='format-buttons'>
+                <div className='format-buttons d-flex flex-nowrap'>
                     <button className='btn btn-primary my-1 mx-2' onClick={boldText}><strong>B</strong></button>
                     <button className='btn btn-primary my-1 mx-2' onClick={italicText}><i>I</i></button>
                     <button className='btn btn-primary my-1 mx-2' onClick={underlineText}><u>U</u></button>

@@ -6,11 +6,12 @@
     min-height: 100px;
 }
 .preview{
-    width: 30vw;
+    width: 40%;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 .format-buttons{
-    
+    margin-left: 20px;
 }
+
